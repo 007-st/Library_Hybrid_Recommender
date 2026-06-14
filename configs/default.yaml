@@ -1,0 +1,98 @@
+project:
+  seed: 2026
+  device: auto                  # auto / cpu / cuda
+  num_workers: 0
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  checkpoint_dir: outputs/checkpoints
+  recommendation_dir: outputs/recommendations
+  report_dir: outputs/reports
+  book_file: book.csv
+  inter_file: inter.csv         # 若实际文件名为 inter_final.csv，可在此修改
+  user_file: user.csv
+
+preprocess:
+  min_user_interactions: 2
+  min_item_interactions: 1
+  kcore_max_rounds: 20
+  split_strategy: leave_last_two # leave_last_two / pdf_last_day
+  monthly_decay: 0.98
+  metadata:
+    user_svd_dim: 16
+    item_svd_dim: 64
+    max_text_features: 20000
+
+recall:
+  candidate_topk_each: 120
+  final_candidate_size: 300
+  popularity_topk: 120
+
+als:
+  enabled: true
+  backend: torch               # torch / implicit；torch 为纯 PyTorch 实现
+  factors: 48
+  iterations: 37
+  regularization: 0.05
+  confidence_alpha: 39.92
+  batch_rows: 512
+  use_gpu: true
+
+lightgcn:
+  enabled: true
+  embedding_size: 88
+  layer_count: 1
+  epochs: 80
+  samples_per_epoch: 80000
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  early_stop: 8
+
+item2vec:
+  enabled: true
+  embedding_size: 88
+  context_window: 5
+  epochs: 5
+  negative: 10
+  workers: 4
+  recent_history_length: 20
+
+ranker:
+  enabled: true
+  user_embedding_dim: 64
+  item_embedding_dim: 64
+  hidden_dims: [256, 128, 64]
+  dropout: 0.29
+  batch_size: 1069
+  epochs: 50
+  learning_rate: 0.000147
+  weight_decay: 0.00001
+  patience: 5
+  train_samples_per_epoch: 80000
+  hard_negative_ratio: 0.40
+  popularity_negative_ratio: 0.60
+
+rule:
+  enabled: true
+  max_id_gap: 10
+  min_sequence_items: 2
+  max_candidates_per_user: 50
+  weights:
+    id_gap: 0.20
+    completeness: 0.20
+    temporal: 0.15
+    significance: 0.15
+    topic: 0.30
+
+fusion:
+  high_confidence: 0.60
+  medium_confidence: 0.40
+  low_confidence: 0.20
+  high_rule_weight: 0.80
+  medium_rule_weight: 0.50
+  low_rule_weight: 0.20
+
+evaluation:
+  topk: [1, 5, 10, 20]
+  exclude_seen: true

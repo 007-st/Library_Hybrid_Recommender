@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# IDE and virtual environment
+.idea/
+.vscode/
+.venv/
+venv/
+env/
+
+# Private datasets
+data/raw/*
+!data/raw/.gitkeep
+
+# Generated preprocessing data and model outputs
+data/processed/
+outputs/
+
+# Logs and temporary files
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
