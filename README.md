@@ -1,30 +1,7 @@
-# 高校图书馆混合推荐系统（PyTorch）
+# 高校图书馆个性化图书推荐算法
 
-本项目实现了一个面向高校图书馆借阅场景的混合推荐系统，主要包含 ALS、LightGCN、Item2Vec 多路召回，BPR 神经网络精排，图书编号序列缺口规则推荐，以及基于规则置信度的动态软融合。
+本项目实现了一个面向高校图书馆真实图书借阅场景(脱敏)的推荐算法，主要包含 ALS、LightGCN 召回，神经网络排序。
 
-## 项目结构
-
-```text
-library_hybrid_recommender/
-├── configs/
-│   └── default.yaml
-├── data/
-│   └── raw/                  # 放置 book.csv、inter.csv、user.csv
-├── src/
-│   ├── data/                 # 数据清洗、划分和特征处理
-│   ├── evaluation/           # 推荐指标与离线评估
-│   ├── inference/            # 候选生成、融合与推荐
-│   ├── models/               # ALS、LightGCN、Item2Vec、精排模型
-│   ├── rules/                # 序列缺口规则推荐
-│   ├── training/             # 召回和精排训练流程
-│   └── utils/                # 配置、日志、随机种子等工具
-├── .gitignore
-├── README.md
-├── requirements.txt
-└── run.py
-```
-
-`data/processed/`、`outputs/checkpoints/`、`outputs/reports/` 和 `outputs/recommendations/` 会在程序运行时自动创建，不包含在项目压缩包中。
 
 ## 数据文件
 
@@ -91,16 +68,5 @@ python run.py --config configs/default.yaml recommend --user-id "用户原始ID"
 ```bash
 python run.py --config configs/default.yaml quantize
 ```
+数据集这里暂时不提供如果需要的朋友可以联系我~
 
-## 配置说明
-
-主要参数统一保存在 `configs/default.yaml` 中，包括设备、数据路径、数据划分、ALS、LightGCN、Item2Vec、神经精排、规则置信度、融合权重和评估指标。
-
-设备默认设置为：
-
-```yaml
-project:
-  device: auto
-```
-
-程序会在 CUDA 可用时使用 GPU，否则自动使用 CPU。真实数据、预处理结果、模型参数和推荐结果均已通过 `.gitignore` 排除，不会上传到 GitHub。
