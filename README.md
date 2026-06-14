@@ -5,8 +5,6 @@
 
 ## 数据文件
 
-将以下三个 CSV 文件放入 `data/raw/`。
-
 ### book.csv
 
 ```text
@@ -24,8 +22,6 @@ inter_id,user_id,book_id,借阅时间,还书时间,续借时间,续借次数
 ```text
 借阅人,性别,DEPT,年级,类型
 ```
-
-若交互文件名称不是 `inter.csv`，请修改 `configs/default.yaml` 中的 `paths.inter_file`。
 
 ## 环境安装
 
